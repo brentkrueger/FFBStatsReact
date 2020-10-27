@@ -1,0 +1,10 @@
+C:\inetpub\wwwroot\FFBStats\YahooFantasyWrapper\bin\Debug\netstandard2.0\YahooFantasyWrapper.xml
+C:\inetpub\wwwroot\FFBStats\YahooFantasyWrapper\bin\Debug\netstandard2.0\YahooFantasyWrapper.deps.json
+C:\inetpub\wwwroot\FFBStats\YahooFantasyWrapper\bin\Debug\netstandard2.0\YahooFantasyWrapper.dll
+C:\inetpub\wwwroot\FFBStats\YahooFantasyWrapper\bin\Debug\netstandard2.0\YahooFantasyWrapper.pdb
+C:\inetpub\wwwroot\FFBStats\YahooFantasyWrapper\obj\Debug\netstandard2.0\YahooFantasyWrapper.AssemblyInfoInputs.cache
+C:\inetpub\wwwroot\FFBStats\YahooFantasyWrapper\obj\Debug\netstandard2.0\YahooFantasyWrapper.AssemblyInfo.cs
+C:\inetpub\wwwroot\FFBStats\YahooFantasyWrapper\obj\Debug\netstandard2.0\YahooFantasyWrapper.csproj.CoreCompileInputs.cache
+C:\inetpub\wwwroot\FFBStats\YahooFantasyWrapper\obj\Debug\netstandard2.0\YahooFantasyWrapper.dll
+C:\inetpub\wwwroot\FFBStats\YahooFantasyWrapper\obj\Debug\netstandard2.0\YahooFantasyWrapper.pdb
+C:\inetpub\wwwroot\FFBStats\YahooFantasyWrapper\obj\Debug\netstandard2.0\YahooFantasyWrapper.csprojAssemblyReference.cache

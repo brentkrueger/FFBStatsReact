@@ -1,0 +1,908 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>YahooFantasyWrapper</name>
+    </assembly>
+    <members>
+        <member name="F:YahooFantasyWrapper.Client.ApiEndpoints.BaseApiUrl">
+            <summary>
+            Api Url for Yahoo Fantasy Api :https://fantasysports.yahooapis.com/fantasy/v2
+            </summary>
+        </member>
+        <member name="F:YahooFantasyWrapper.Client.ApiEndpoints.LoginString">
+            <summary>
+            QS Parameter to specify to use the authenticated users scope
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.AuthApiEndPoints.AccessCodeServiceEndpoint">
+            <summary>
+            The request authorization endpoint
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.AuthApiEndPoints.AccessTokenServiceEndpoint">
+            <summary>
+            The acess token service endpoint
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.AuthApiEndPoints.UserInfoServiceEndpoint">
+            <summary>
+            Defines URI of service which allows to obtain information about user which is currently logged in.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.IYahooAuthClient.GetLoginLinkUri">
+            <summary>
+            Returns URI of service which should be called in order to start authentication process. 
+            You should use this URI when rendering login link.
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.IYahooAuthClient.Configuration">
+            <summary>
+            Client configuration object.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.IYahooAuthClient.GetUserInfo(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Calls Yahoo! Profile Api to get User Information
+            </summary>
+            <param name="parameters">QS Parameters to parse for auth</param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.IYahooAuthClient.GetCurrentToken(System.String,System.Boolean)">
+            <summary>
+            Gets Current Token from request
+            </summary>
+            <param name="refreshToken">refresh token used for generation of new access token </param>
+            <param name="forceUpdate">flag to force generation of new access token</param>
+            <returns></returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.IYahooAuthClient.ClearAuth">
+            <summary>
+            Resets Auth for Context, this fires when user logs out
+            </summary>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.YahooAuthClient">
+            <summary>
+            Client used to interface with authentication mechanism of Yahoo
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.YahooAuthClient.UserProfileGUID">
+            <summary>
+            Guid to represent user from Yahoo Api
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.YahooAuthClient.Auth">
+            <summary>
+            Authentication Model that stores auth data (Tokens, Grant Type)
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.YahooAuthClient.Configuration">
+            <summary>
+            Client configuration object.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.YahooAuthClient.#ctor(YahooFantasyWrapper.Infrastructure.IRequestFactory,Microsoft.Extensions.Options.IOptions{YahooFantasyWrapper.Configuration.YahooConfiguration})">
+            <summary>
+            Initializes a new instance of the <see cref="T:YahooFantasyWrapper.Client.YahooAuthClient"/> class.
+            </summary>
+            <param name="factory">The factory.</param>
+            <param name="configuration">The configuration.</param>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.YahooAuthClient.AfterGetAccessToken(YahooFantasyWrapper.Client.BeforeAfterRequestArgs)">
+            <summary>
+            It's required to store the User GUID obtained in the response for further usage
+            https://developer.yahoo.com/oauth2/guide/flows_authcode/
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.YahooAuthClient.GetUserInfo(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Obtains user information using OAuth2 service and data provided via callback request.
+            </summary>
+            <param name="parameters">Callback request payload (parameters).</param>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.YahooAuthClient.GetUserInfo">
+            <summary>
+            Get User Profile Infor from Yahoo Api
+            https://social.yahooapis.com/v1/user/{UserProfileGUID}/profile?format=json
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.YahooAuthClient.QueryAccessToken(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Issues query for access token and parses response.
+            </summary>
+            <param name="parameters">Callback request payload (parameters).</param>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.YahooAuthClient.ParseTokenResponse(System.String,System.String)">
+            <summary>
+            Parse Response from Api Call and returns Access Token
+            </summary>
+            <param name="response">api response</param>
+            <param name="key">key for response type</param>
+            <returns></returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.YahooAuthClient.GetCurrentToken(System.String,System.Boolean)">
+            <summary>
+            Gets Current Token from request
+            </summary>
+            <param name="refreshToken">refresh token used for generation of new access token </param>
+            <param name="forceUpdate">flag to force generation of new access token</param>
+            <returns>Access Token</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.YahooAuthClient.GetLoginLinkUri">
+            <summary>
+            Returns URI of service which should be called in order to start authentication process.
+            This URI should be used for rendering login link.
+            </summary>
+            Any additional information that will be posted back by service.
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.YahooAuthClient.AddQueryString(System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            Helper Method to Convert QS Params into stirng
+            </summary>
+            <param name="uri">Uri to add params to</param>
+            <param name="queryString">KVPairs that represent QS params</param>
+            <returns></returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.YahooAuthClient.ClearAuth">
+            <summary>
+            Resets Auth for Context, this fires when user logs out
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.BeforeAfterRequestArgs.Client">
+            <summary>
+            Client instance.
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.BeforeAfterRequestArgs.Request">
+            <summary>
+            Request instance.
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.BeforeAfterRequestArgs.Response">
+            <summary>
+            Response instance.
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.BeforeAfterRequestArgs.Parameters">
+            <summary>
+            Values received from service.
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.BeforeAfterRequestArgs.Configuration">
+            <summary>
+            Client configuration.
+            </summary>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.GameCollectionFilters">
+            <summary>
+            Filter Object for Game Collection
+            </summary>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.PlayerCollectionFilters">
+            <summary>
+            Filter Object for Player Collection
+            </summary>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.EndPoint">
+            <summary>
+            Base class for Api Endpoints
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.EndPoint.BaseUri">
+            <summary>
+            Base URI (service host address).
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.EndPoint.Resource">
+            <summary>
+            Resource URI (service method).
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.EndPoint.Uri">
+            <summary>
+            Complete URI of endpoint (base URI combined with resource URI).
+            </summary>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.EndpointSubResourcesCollection">
+            <summary>
+            Subresrources handler class
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.EndpointSubResourcesCollection.Resources">
+            <summary>
+            List of chosen subresources
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.EndpointSubResourcesCollection.BuildResourceList(YahooFantasyWrapper.Client.EndpointSubResources[])">
+            <summary>
+            Builds list of subresrources to pass onto Api
+            </summary>
+            <param name="resources">subresources for api</param>
+            <returns></returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.EndpointSubResourcesExtensions.ToFriendlyString(YahooFantasyWrapper.Client.EndpointSubResources)">
+            <summary>
+            Passes Enumeration and maps to friendly string for api
+            </summary>
+            <param name="resource">resoure to map to friendly name</param>
+            <returns></returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.EndpointSubResourcesExtensions.IsNotEmpty(YahooFantasyWrapper.Client.EndpointSubResourcesCollection)">
+            <summary>
+            Check if List of SubResources is null or empty
+            </summary>
+            <param name="subresources">List of SubResources</param>
+            <returns>if it is empty or not</returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.GameCollectionsManager">
+            <summary>
+            https://developer.yahoo.com/fantasysports/guide/#games-collection
+            With the Games API, you can obtain information from a collection of games simultaneously. 
+            Each element beneath the Games Collection will be a Game Resource
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.GameCollectionsManager.GetGames(System.String,System.String)">
+            <summary>
+            Gets Games Collection based on supplied Keys
+            Attaches Requested SubResources
+            Applies Filters if included
+            </summary>
+            <param name="gameKey">Game Key to return Resources for </param>
+            <param name="AccessToken">Token for request</param>
+            <returns>Games Collection (List of Game Resources)</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.GameCollectionsManager.GetGames(System.String[],System.String,YahooFantasyWrapper.Client.EndpointSubResourcesCollection,YahooFantasyWrapper.Client.GameCollectionFilters)">
+            <summary>
+            Gets Games Collection based on supplied Keys
+            Attaches Requested SubResources
+            Applies Filters if included
+            </summary>
+            <param name="gameKeys">Game Keys to return Resources for </param>
+            <param name="subresources">SubResources to include with Game Resource</param>
+            <param name="AccessToken">Token for request</param>
+            <param name="filters">Custom Filter Object on Game</param>
+            <returns>Games Collection (List of Game Resources)</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.GameCollectionsManager.GetGamesUsers(System.String,System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection,YahooFantasyWrapper.Client.GameCollectionFilters)">
+            <summary>
+            Gets Games Collection based on supplied Keys for logged in user
+            Attaches Requested SubResources
+            Applies Filters if included
+            </summary>
+            <param name="gameKeys">Game Keys to return Resources for </param>
+            <param name="subresources">SubResources to include with Game Resource</param>
+            <param name="AccessToken">Token for request</param>
+            <param name="filters">Custom Filter Object on Game</param>
+            <returns>Games Collection (List of Game Resources)</returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.LeaguesCollectionManager">
+            <summary>
+            https://developer.yahoo.com/fantasysports/guide/#leagues-collection
+            With the Leagues API, you can obtain information from a collection of leagues simultaneously.
+            Each element beneath the Leagues Collection will be a League Resource
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.LeaguesCollectionManager.GetLeagues(System.String,System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection)">
+            <summary>
+            Gets Leagues Collection based on supplied Keys
+            Attaches Requested SubResources
+            </summary>
+            <param name="leagueKeys">League Keys to return Resources for </param>
+            <param name="subresources">SubResources to include with League Resource</param>
+            <param name="AccessToken">Token for request</param>
+            <returns>Leagues Collection (List of League Resources)</returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.PlayersCollectionManager">
+            <summary>
+            https://developer.yahoo.com/fantasysports/guide/#players-collection
+            With the Players API, you can obtain information from a collection of players simultaneously. 
+            To obtains general players information, the players collection can be qualified in the URI by a particular game, league or team. 
+            To obtain specific league or team related information, the players collection is qualified by the relevant league or team. 
+            Each element beneath the Players Collection will be a Player Resource
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.PlayersCollectionManager.GetPlayers(System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection,System.String)">
+            <summary>
+            Gets Players Collection based on supplied Keys
+            Attaches Requested SubResources
+            </summary>
+            <param name="playerKeys">Players Keys to return Resources for </param>
+            <param name="subresources">SubResources to include with Player Resource</param>
+            <param name="AccessToken">Token for request</param>
+            <returns>Players Collection (List of Player Resources)</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.PlayersCollectionManager.GetLeaguePlayers(System.String[],System.String,YahooFantasyWrapper.Client.EndpointSubResourcesCollection)">
+            <summary>
+            Gets Players Collection based on supplied league Keys
+            Attaches Requested SubResources
+            </summary>
+            <param name="leagueKeys">League Keys to return Resources for </param>
+            <param name="subresources">SubResources to include with Player Resource</param>
+            <param name="AccessToken">Token for request</param>
+            <returns>Players Collection (List of Player Resources)</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.PlayersCollectionManager.GetTeamPlayers(System.String,System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection)">
+            <summary>
+            Gets Players Collection based on supplied team Keys
+            Attaches Requested SubResources
+            </summary>
+            <param name="teamKeys">Team Keys to return Resources for </param>
+            <param name="subresources">SubResources to include with Player Resource</param>
+            <param name="AccessToken">Token for request</param>
+            <returns>Players Collection (List of Player Resources)</returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.TeamsCollectionManager">
+            <summary>
+            https://developer.yahoo.com/fantasysports/guide/#teams-collection
+            With the Teams API, you can obtain information from a collection of teams simultaneously. 
+            The teams collection is qualified in the URI by a particular league to obtain information about teams within the league, 
+            or by a particular user (and optionally, a game) to obtain information about the teams owned by the user.
+            Each element beneath the Teams Collection will be a Team Resource
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TeamsCollectionManager.GetTeams(System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection,System.String)">
+            <summary>
+            Gets Teams Collection based on supplied Keys
+            Attaches Requested SubResources
+            </summary>
+            <param name="teamKeys">Teams Keys to return Resources for </param>
+            <param name="subresources">SubResources to include with Team Resource</param>
+            <param name="AccessToken">Token for request</param>
+            <returns>Team Collection (List of Team Resources)</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TeamsCollectionManager.GetLeagueTeams(System.String,System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection)">
+            <summary>
+            Gets Teams Collection based on supplied league Keys
+            Attaches Requested SubResources
+            </summary>
+            <param name="leagueKeys">League Keys to return Resources for </param>
+            <param name="subresources">SubResources to include with Team Resource</param>
+            <param name="AccessToken">Token for request</param>
+            <returns>Team Collection (List of Team Resources)</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TeamsCollectionManager.GetUserGamesTeams(System.String,System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection)">
+            <summary>
+            Gets Teams Collection based on supplied game Keys for logged in user
+            Attaches Requested SubResources
+            </summary>
+            <param name="gameKeys">Game Keys to return Resources for </param>
+            <param name="subresources">SubResources to include with Team Resource</param>
+            <param name="AccessToken">Token for request</param>
+            <returns>Team Collection (List of Team Resources)</returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.TransactionsCollectionManager">
+            <summary>
+            https://developer.yahoo.com/fantasysports/guide/#transactions-collection
+            With the Transactions API, you can obtain information via GET from a collection of transactions simultaneously. 
+            The transactions collection is qualified in the URI by a particular league.
+            Each element beneath the Transactions Collection will be a Transaction Resource
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TransactionsCollectionManager.GetTransactions(System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection,System.String)">
+            <summary>
+            Gets Transactions Collection based on supplied Keys
+            Attaches Requested SubResources
+            </summary>
+            <param name="transactionKeys">Transaction Keys to return Resources for </param>
+            <param name="subresources">SubResources to include with Transaction Resource</param>
+            <param name="AccessToken">Token for request</param>
+            <returns>Transaction Collection (List of Transaction Resources)</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TransactionsCollectionManager.GetTransactionsLeagues(System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection,System.String)">
+            <summary>
+            Gets Transactions Collection based on supplied league Keys
+            Attaches Requested SubResources
+            </summary>
+            <param name="leagueKeys">League Keys to return Resources for </param>
+            <param name="subresources">SubResources to include with Transaction Resource</param>
+            <param name="AccessToken">Token for request</param>
+            <returns>Transaction Collection (List of Transaction Resources)</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TransactionsCollectionManager.AddPlayer(System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection,System.String)">
+            <summary>
+            Adds Player
+            TODO
+            </summary>
+            <param name="gameKeys"></param>
+            <param name="subresources"></param>
+            <param name="AccessToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TransactionsCollectionManager.DropPlayer(System.String,System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection)">
+            <summary>
+            Drops Player
+            TODO
+            </summary>
+            <param name="AccessToken"></param>
+            <param name="gameKeys"></param>
+            <param name="subresources"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TransactionsCollectionManager.AddDropPlayer(System.String,System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection)">
+            <summary>
+            Add/Drops Players
+            TODO
+            </summary>
+            <param name="AccessToken"></param>
+            <param name="gameKeys"></param>
+            <param name="subresources"></param>
+            <returns></returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.GameResourceManager">
+            <summary>
+            https://developer.yahoo.com/fantasysports/guide/#game-resource
+            With the Game API, you can obtain the fantasy game related information, like the fantasy game name, the Yahoo! game code, and season.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.GameResourceManager.GetMeta(System.String,System.String)">
+            <summary>
+            Get Game Resource with Meta Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/game/{gameKey}/metadata
+            </summary>
+            <param name="gameKey">GameKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Game Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.GameResourceManager.GetLeagues(System.String,System.String[],System.String)">
+            <summary>
+            Get Game Resource with Leagues Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/game/{gameKey}/leagues
+            </summary>
+            <param name="gameKey">GameKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Game Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.GameResourceManager.GetPlayers(System.String,System.String[],System.String)">
+            <summary>
+            Get Game Resource with Players Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/game/{gameKey}/players
+            </summary>
+            <param name="gameKey">GameKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Game Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.GameResourceManager.GetGameWeeks(System.String,System.String)">
+            <summary>
+            Get Game Resource with GameWeeks Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/game/{gameKey}/game_weeks
+            </summary>
+            <param name="gameKey">GameKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Game Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.GameResourceManager.GetStatCategories(System.String,System.String)">
+            <summary>
+            Get Game Resource with Stat Categories Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/game/{gameKey}/stat_categories
+            </summary>
+            <param name="gameKey">GameKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Game Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.GameResourceManager.GetPositionTypes(System.String,System.String)">
+            <summary>
+            Get Game Resource with Position Types Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/game/{gameKey}/position_types
+            </summary>
+            <param name="gameKey">GameKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Game Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.GameResourceManager.GetRosterPositions(System.String,System.String)">
+            <summary>
+            Get Game Resource with Roster Positions Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/game/{gameKey}/roster_positions
+            </summary>
+            <param name="gameKey">GameKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Game Resource</returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.LeagueResourceManager">
+            <summary>
+            https://developer.yahoo.com/fantasysports/guide/#league-resource
+            When users join a Fantasy Football, Baseball, Basketball, or Hockey draft and trade game, 
+            they are organized into leagues with a limited number of friends or other Yahoo! users, with each user managing a Team. 
+            With the League API, you can obtain the league related information, like the league name, the number of teams, the draft status, et cetera. 
+            Leagues only exist in the context of a particular Game, although you can request a League Resource as the base of your URI by using the global ````. 
+            A particular user can only retrieve data for private leagues of which they are a member, or for public leagues.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.LeagueResourceManager.GetMeta(System.String,System.String)">
+            <summary>
+            Get League Resource with Meta Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/league/{leagueKey}/metadata
+            </summary>
+            <param name="leagueKey">LeagueKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>League Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.LeagueResourceManager.GetSettings(System.String,System.String)">
+            <summary>
+            Get League Resource with Settings Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/league/{leagueKey}/settings
+            </summary>
+            <param name="leagueKey">LeagueKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>League Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.LeagueResourceManager.GetStandings(System.String,System.String)">
+            <summary>
+            Get League Resource with Standings Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/league/{leagueKey}/standings
+            </summary>
+            <param name="leagueKey">LeagueKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>League Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.LeagueResourceManager.GetScoreboard(System.String,System.String,System.Nullable{System.Int32}[])">
+            <summary>
+            Get League Resource with Scoreboard Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/league/{leagueKey}/scoreboard
+            </summary>
+            <param name="leagueKey">LeagueKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <param name="weeks">Weeks to get the scoreboards for</param>
+            <returns>League Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.LeagueResourceManager.GetTeams(System.String,System.String)">
+            <summary>
+            Get League Resource with Teams Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/league/{leagueKey}/teams
+            </summary>
+            <param name="leagueKey">LeagueKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>League Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.LeagueResourceManager.GetDraftResults(System.String,System.String)">
+            <summary>
+            Get League Resource with DraftResults Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/league/{leagueKey}/draft_results
+            </summary>
+            <param name="leagueKey">LeagueKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>League Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.LeagueResourceManager.GetTransactions(System.String,System.String)">
+            <summary>
+            Get League Resource with Transactions Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/league/{leagueKey}/transactions
+            </summary>
+            <param name="leagueKey">LeagueKey to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>League Resource</returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.PlayerResourceManager">
+            <summary>
+            https://developer.yahoo.com/fantasysports/guide/#player-resource
+            With the Player API, you can obtain the player (athlete) related information, such as their name, professional team, and eligible positions. 
+            The player is identified in the context of a particular game, and can be requested as the base of your URI by using the global ````.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.PlayerResourceManager.GetMeta(System.String,System.String)">
+            <summary>
+            Get Player Resource with Meta Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/player/{playerKey}/metadata
+            </summary>
+            <param name="playerKey">Player Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Player Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.PlayerResourceManager.GetStats(System.String,System.String)">
+            <summary>
+            Get Player Resource with Stats Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/player/{playerKey}/stats
+            </summary>
+            <param name="playerKey">Player Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Player Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.PlayerResourceManager.GetOwnership(System.String[],System.String,System.String)">
+            <summary>
+            Get Player Resource with Ownership Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/player/{playerKey}/ownership
+            </summary>
+            <param name="playerKey">Player Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Player Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.PlayerResourceManager.GetPercentOwned(System.String,System.String)">
+            <summary>
+            Get Player Resource with Percent Owned Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/player/{playerKey}/precent_owned
+            </summary>
+            <param name="playerKey">Player Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Player Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.PlayerResourceManager.GetDraftAnalysis(System.String,System.String)">
+            <summary>
+            Get Player Resource with Draft Analysis Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/player/{playerKey}/draft_analysis
+            </summary>
+            <param name="playerKey">Player Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Player Resource</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:YahooFantasyWrapper.Client.RosterResourceManager" -->
+        <member name="M:YahooFantasyWrapper.Client.RosterResourceManager.GetPlayers(System.String,System.Nullable{System.Int32},System.Nullable{System.DateTime},System.String)">
+            <summary>
+            Get Roster Resource with Player Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/team/{teamKey}/roster/players
+            </summary>
+            <param name="teamKey">Team Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <param name="week">Optional Week to get Roster at particular time</param>
+            <param name="date">Optional Date to get Roster at particular time</param>
+            <returns>Player Resource</returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.TeamResourceManager">
+            <summary>
+            https://developer.yahoo.com/fantasysports/guide/#team-resource
+            The Team APIs allow you to retrieve information about a team within our fantasy games. The team is the basic unit for keeping track of a roster of players, 
+            and can be managed by either one or two managers (the second manager being called a co-manager). With the Team APIs, you can obtain team-related information, 
+            like the team name, managers, logos, stats and points, and rosters for particular weeks. Teams only exist in the context of a particular League, 
+            although you can request a Team Resource as the base of your URI by using the global ````. 
+            A particular user can only retrieve data about a team if that team is part of a private league of which the user is a member, or if it’s in a public league.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TeamResourceManager.GetMeta(System.String,System.String)">
+            <summary>
+            Get Team Resource with Meta Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/team/{teamKey}/metadata
+            </summary>
+            <param name="teamKey">Team Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Team Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TeamResourceManager.GetStats(System.String,System.String)">
+            <summary>
+            Get Team Resource with Stats Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/team/{teamKey}/stats
+            </summary>
+            <param name="teamKey">Team Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Team Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TeamResourceManager.GetStandings(System.String,System.String)">
+            <summary>
+            Get Team Resource with Standings Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/team/{teamKey}/standings
+            </summary>
+            <param name="teamKey">Team Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Team Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TeamResourceManager.GetRoster(System.String,System.String)">
+            <summary>
+            Get Team Resource with Roster Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/team/{teamKey}/roster
+            </summary>
+            <param name="teamKey">Team Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Team Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TeamResourceManager.GetDraftResults(System.String,System.String)">
+            <summary>
+            Get Team Resource with Draft Results Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/team/{teamKey}/draft_results
+            </summary>
+            <param name="teamKey">Team Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Team Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TeamResourceManager.GetMatchups(System.String,System.String)">
+            <summary>
+            Get Team Resource with Matchups Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/team/{teamKey}/matchups
+            </summary>
+            <param name="teamKey">Team Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Team Resource</returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.TransactionResourceManager">
+             <summary>
+             https://developer.yahoo.com/fantasysports/guide/#transaction-resource
+             With the Transaction API, you can obtain information about transactions (adds, drops, trades, and league settings changes) performed on a league. 
+             A transaction is identified in the context of a particular league, although you can request a particular Transaction Resource as the base of your URI by using the global ````.
+            
+             You can also PUT to the API to perform operations like editing waiver priorities or FAAB bids, or modifying the state of pending trades.
+             You can also cancel pending transactions by DELETEing them.
+            
+             Keep in mind, if you don’t have the ```` for a waiver claim or pending trade, the only way to discover these transactions is to filter the league 
+             Transactions collection by a particular type(waiver or pending_trade) and by a particular ````. 
+             Pending transactions will not show up if you simply ask for all of the transactions in the league, because they can only be seen by certain teams.
+             </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TransactionResourceManager.GetMeta(System.String,System.String)">
+            <summary>
+            Get Transaction Resource with Meta Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/transaction/{transactionKey}/metadata
+            </summary>
+            <param name="transactionKey">Transaction Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Transaction Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.TransactionResourceManager.GetPlayers(System.String,System.String)">
+            <summary>
+            Get Transaction Resource with Player Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/transaction/{transactionKey}/players
+            </summary>
+            <param name="transactionKey">Transaction Key to Query</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>Transaction Resource</returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.UserResourceManager">
+            <summary>
+            https://developer.yahoo.com/fantasysports/guide/#user-resource
+            With the User API, you can retrieve fantasy information for a particular Yahoo! user. Most usefully, you can see which games a user is playing, 
+            and which leagues they belong to and teams that they own within those games. 
+            Because you can currently only view user information for the logged in user, you would generally want to use the Users collection, 
+            passing along the use_login flag, instead of trying to request a User resource directly from the URI.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.UserResourceManager.GetUser(System.String)">
+            <summary>
+            Get Team Resource with Meta Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/users;use_login=1
+            </summary>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <returns>User Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.UserResourceManager.GetUserGameLeagues(System.String,System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection)">
+            <summary>
+            Get User Resource with Game/League Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/users;use_login=1/games{gameKeys}/leagues
+            </summary>
+            <param name="gameKeys">Game Keys to get League Resource for</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <param name="subresources">SubResources to include with League Resource</param>
+            <returns>User Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.UserResourceManager.GetUserGamesTeamsEndPoint(System.String,System.String[],YahooFantasyWrapper.Client.EndpointSubResourcesCollection)">
+            <summary>
+            Get User Resource with Game/Teams Subresource
+            https://fantasysports.yahooapis.com/fantasy/v2/users;use_login=1/games{gameKeys}/leagues
+            </summary>
+            <param name="gameKeys">Game Keys to get Team Resource for</param>
+            <param name="AccessToken">Access Token from Auth Api</param>
+            <param name="subresources">SubResources to include with League Resource</param>
+            <returns>User Resource</returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.Utils.GetResponseData(YahooFantasyWrapper.Client.EndPoint,System.String)">
+            <summary>
+            Gets Access Token and makes Request against Endpoint passed in
+            </summary>
+            <param name="endpoint">Uri of Api to Query</param>
+            <param name="AccessToken">Items on QS/Form Data used to fulfill Api Call</param>
+            <returns></returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.Utils.GetCollection``1(YahooFantasyWrapper.Client.EndPoint,System.String,System.String)">
+            <summary>
+            Generic Handler to Retrieve Collection for Api
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="endPoint">EndPoint requested</param>
+            <param name="AccessToken"></param>
+            <param name="lookup">Collection Type to Retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.Utils.GetResource``1(YahooFantasyWrapper.Client.EndPoint,System.String,System.String)">
+            <summary>
+            Generic Handler to Retrieve Resource for Api
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="endPoint">EndPoint requested</param>
+            <param name="AccessToken"></param>
+            <param name="lookup">Resource Type to Retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="T:YahooFantasyWrapper.Client.UnexpectedResponseException">
+            <summary>
+            Indicates unexpected response from service.
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.UnexpectedResponseException.FieldName">
+            <summary>
+            Name of field which contains unexpected (GET) response.
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Client.UnexpectedResponseException.Response">
+            <summary>
+            Unexpected response itself (can be null, if error occured later in the response processing pipeline).
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.UnexpectedResponseException.#ctor(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YahooFantasyWrapper.Client.UnexpectedResponseException"/> class.
+            </summary>
+            <param name="response">The response.</param>
+        </member>
+        <member name="M:YahooFantasyWrapper.Client.UnexpectedResponseException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YahooFantasyWrapper.Client.UnexpectedResponseException"/> class.
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+        </member>
+        <member name="T:YahooFantasyWrapper.Configuration.YahooConfiguration">
+            <summary>
+            Strongly-Typed Version of App Configuration
+            Should be filled with DI
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Configuration.YahooConfiguration.ClientId">
+            <summary>
+            Client Id from Yahoo
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Configuration.YahooConfiguration.ClientSecret">
+            <summary>
+            Client Secret From Yahoo
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Configuration.YahooConfiguration.RedirectUri">
+            <summary>
+            Redirect Uri Specified. This will be redirected back to from Yahoo Auth Flow
+            </summary>
+        </member>
+        <member name="T:YahooFantasyWrapper.Infrastructure.IRequestFactory">
+            <summary>
+            Intended for REST client/request creation.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Infrastructure.IRequestFactory.CreateClient(System.Net.Http.Headers.AuthenticationHeaderValue)">
+            <summary>
+            Returns new REST client instance.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Infrastructure.IRequestFactory.CreateRequest">
+            <summary>
+            Returns new REST request instance.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Infrastructure.RequestFactory.CreateClient(System.Net.Http.Headers.AuthenticationHeaderValue)">
+            <summary>
+            Returns new REST client instance.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Infrastructure.RequestFactory.CreateRequest">
+            <summary>
+            Returns new REST request instance.
+            </summary>
+        </member>
+        <member name="M:YahooFantasyWrapper.Infrastructure.NameValueCollectionExtensions.GetOrThrowUnexpectedResponse(System.Collections.Specialized.NameValueCollection,System.String)">
+            <summary>
+            Check to make sure QS Parameters have been passed, otherwise Exception
+            </summary>
+            <param name="collection">QS to Parse</param>
+            <param name="key">Key for QS Param</param>
+            <returns></returns>
+        </member>
+        <member name="F:YahooFantasyWrapper.Infrastructure.YahooXml.XMLNS">
+            <summary>
+            Xml Namespace for Yahoo Fantasy Xml Returned
+            </summary>
+        </member>
+        <member name="T:YahooFantasyWrapper.Models.AuthModel">
+            <summary>
+            Class to Store Authentication Data for Yahoo
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Models.AuthModel.RefreshToken">
+            <summary>
+            Refresh token returned by provider. Can be used for further calls of provider API.
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Models.AuthModel.TokenType">
+            <summary>
+            Token type returned by provider. Can be used for further calls of provider API.
+            </summary>
+        </member>
+        <member name="P:YahooFantasyWrapper.Models.AuthModel.ExpiresAt">
+            <summary>
+            Seconds till the token expires returned by provider. Can be used for further calls of provider API.
+            </summary>
+        </member>
+    </members>
+</doc>
