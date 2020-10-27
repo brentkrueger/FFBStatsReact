@@ -52,6 +52,7 @@ namespace FFBStats
             {
                 options.ClientId = Configuration["YahooConfiguration:ClientId"];
                 options.ClientSecret = Configuration["YahooConfiguration:ClientSecret"];
+                options.SaveTokens = true;
             })
             .AddCookie(options =>
             {
