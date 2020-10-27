@@ -14,6 +14,7 @@ export class Layout extends Component {
     }
 
     componentDidMount() {
+
         fetch('/api/account/IsAuthenticated')
             .then(response => response.json())
             .then(data => {
