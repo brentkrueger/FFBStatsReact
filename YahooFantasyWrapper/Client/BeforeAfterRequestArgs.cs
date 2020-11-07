@@ -1,8 +1,5 @@
-﻿using System.Net.Http;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Text;
+﻿using System.Collections.Specialized;
+using System.Net.Http;
 using YahooFantasyWrapper.Configuration;
 
 namespace YahooFantasyWrapper.Client

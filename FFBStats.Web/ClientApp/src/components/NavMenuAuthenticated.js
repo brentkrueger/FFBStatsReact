@@ -36,7 +36,7 @@ export class NavMenuAuthenticated extends Component {
                   <NavLink tag={Link} className="text-dark" to="/StatsPortal">Stats Portal</NavLink>
                             </NavItem>
                             <NavItem>
-                                <a class="text-dark" href="/signout">Logout</a>
+                                <a class="text-dark nav-link" href="/signout">Logout</a>
                             </NavItem>
               </ul>
             </Collapse>

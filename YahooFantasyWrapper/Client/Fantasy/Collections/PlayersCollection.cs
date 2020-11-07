@@ -49,7 +49,7 @@ namespace YahooFantasyWrapper.Client
         /// <returns>Players Collection (List of Player Resources)</returns>
         public async Task<List<Team>> GetTeamPlayers(string AccessToken, string[] teamKeys = null, EndpointSubResourcesCollection subresources = null)
         {
-           return await Utils.GetCollection<Team>(ApiEndpoints.PlayersTeamEndPoint(teamKeys, subresources), AccessToken, "team");
+            return await Utils.GetCollection<Team>(ApiEndpoints.PlayersTeamEndPoint(teamKeys, subresources), AccessToken, "team");
         }
     }
 }

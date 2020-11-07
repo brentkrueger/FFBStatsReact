@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.Xml.Serialization;
-using YahooFantasyWrapper.Infrastructure;
+﻿using System.Threading.Tasks;
 using YahooFantasyWrapper.Models;
 
 namespace YahooFantasyWrapper.Client
@@ -41,7 +34,7 @@ namespace YahooFantasyWrapper.Client
         /// <returns>Team Resource</returns>
         public async Task<Team> GetStats(string teamKey, string AccessToken)
         {
-           return await Utils.GetResource<Team>(ApiEndpoints.TeamEndPoint(teamKey, EndpointSubResources.Stats), AccessToken, "game");
+            return await Utils.GetResource<Team>(ApiEndpoints.TeamEndPoint(teamKey, EndpointSubResources.Stats), AccessToken, "game");
         }
 
         /// <summary>

@@ -20,7 +20,7 @@ namespace YahooFantasyWrapper.Models
         public List<StatWinner> StatWinner { get; set; }
     }
 
- 
+
     [XmlRoot(ElementName = "team_stats")]
     public class TeamStats
     {

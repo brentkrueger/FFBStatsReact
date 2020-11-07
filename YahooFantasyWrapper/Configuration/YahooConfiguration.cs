@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
-
-namespace YahooFantasyWrapper.Configuration
+﻿namespace YahooFantasyWrapper.Configuration
 {
     /// <summary>
     /// Strongly-Typed Version of App Configuration

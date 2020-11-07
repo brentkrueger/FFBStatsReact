@@ -1,24 +1,22 @@
-﻿using System;
+﻿using FFBStats.Web.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using Microsoft.AspNetCore.Mvc;
 using YahooFantasyWrapper.Client;
-using FFBStats.Web.Models;
 using YahooFantasyWrapper.Models;
-using Microsoft.AspNetCore.Authentication;
 
-namespace YahooFantasyWrapper.Web.Controllers
+namespace FFBStats.Web.Controllers
 {
     [Route("api/[controller]")]
-    public class InteractiveController : Controller
+    public class InteractiveController : StatsController
     {
         private readonly IYahooAuthClient _authClient;
         private readonly IYahooFantasyClient _fantasyClient;
 
-        public InteractiveController(IYahooAuthClient authClient, IYahooFantasyClient fantasyClient)
+        public InteractiveController(IYahooAuthClient authClient, IYahooFantasyClient fantasyClient) : base(authClient)
         {
             this._authClient = authClient;
             this._fantasyClient = fantasyClient;
@@ -31,15 +29,11 @@ namespace YahooFantasyWrapper.Web.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<List<Game>> GetGames([FromBody] PostModel model)
+        public async Task<List<Game>> GetGames()
         {
-            var user = await this._fantasyClient.UserResourceManager.GetUser(model.AccessToken);
-            var Games = user.GameList.Games
-                 .Where(a => a.Type == "full")
-                 .OrderBy(a => a.Season)
-                 .ToList();
-
-            return Games;
+            await SetAuthAccessToken();
+            var games = await this._fantasyClient.GameCollectionsManager.GetGames("nfl", _authClient.Auth.AccessToken);
+            return games;
         }
 
         [HttpPost("[action]")]

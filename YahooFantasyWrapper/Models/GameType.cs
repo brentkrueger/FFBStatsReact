@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace YahooFantasyWrapper.Models
+﻿namespace YahooFantasyWrapper.Models
 {
     public enum GameType
     {

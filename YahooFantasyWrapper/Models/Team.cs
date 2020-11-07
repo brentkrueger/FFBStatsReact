@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace YahooFantasyWrapper.Models
@@ -77,10 +75,10 @@ namespace YahooFantasyWrapper.Models
     [XmlRoot(ElementName = "team")]
     public class Team : TeamBase
     {
-        
+
         [XmlElement(ElementName = "roster")]
         public Roster Roster { get; set; }
-        
+
 
         [XmlElement(ElementName = "team_points")]
         public TeamPoints TeamPoints { get; set; }

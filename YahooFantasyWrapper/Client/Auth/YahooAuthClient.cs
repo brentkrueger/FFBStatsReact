@@ -1,18 +1,18 @@
-﻿using System.Linq;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using YahooFantasyWrapper.Configuration;
-using YahooFantasyWrapper.Models;
-using YahooFantasyWrapper.Infrastructure;
-using System.Net.Http;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System.Net.Http.Headers;
-using Microsoft.Extensions.Options;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Threading.Tasks;
+using YahooFantasyWrapper.Configuration;
+using YahooFantasyWrapper.Infrastructure;
+using YahooFantasyWrapper.Models;
 
 namespace YahooFantasyWrapper.Client
 {
@@ -245,7 +245,7 @@ namespace YahooFantasyWrapper.Client
                 new KeyValuePair<string, string>("client_id", Configuration.Value.ClientId),
                 new KeyValuePair<string, string>("client_secret", Configuration.Value.ClientSecret),
                 new KeyValuePair<string, string>("redirect_uri", Configuration.Value.RedirectUri)
-            };          
+            };
 
             return AddQueryString(request.RequestUri.ToString(), body.ToDictionary(x => x.Key, x => x.Value));
         }

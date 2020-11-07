@@ -1,7 +1,4 @@
 ﻿using System.Net.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Net.Http.Headers;
 
 namespace YahooFantasyWrapper.Infrastructure
@@ -22,13 +19,15 @@ namespace YahooFantasyWrapper.Infrastructure
         HttpRequestMessage CreateRequest();
     }
 
-    public class RequestFactory: IRequestFactory
+    public class RequestFactory : IRequestFactory
     {
         /// <summary>
         /// Returns new REST client instance.
         /// </summary>
-       public HttpClient CreateClient(AuthenticationHeaderValue auth = null) {
-            return new HttpClient() {
+        public HttpClient CreateClient(AuthenticationHeaderValue auth = null)
+        {
+            return new HttpClient()
+            {
                 DefaultRequestHeaders = { Authorization = auth }
             };
         }
@@ -36,7 +35,8 @@ namespace YahooFantasyWrapper.Infrastructure
         /// <summary>
         /// Returns new REST request instance.
         /// </summary>
-      public  HttpRequestMessage CreateRequest() {
+        public HttpRequestMessage CreateRequest()
+        {
             return new HttpRequestMessage();
         }
     }

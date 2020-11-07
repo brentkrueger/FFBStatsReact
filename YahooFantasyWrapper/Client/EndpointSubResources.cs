@@ -1,9 +1,5 @@
-﻿using System.Linq;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace YahooFantasyWrapper.Client
 {
@@ -110,7 +106,7 @@ namespace YahooFantasyWrapper.Client
                 case EndpointSubResources.Leagues:
                     return "leagues";
                 case EndpointSubResources.RosterPositions:
-                    return "roster_positions"; 
+                    return "roster_positions";
                 default:
                     return "";
             }

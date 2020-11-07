@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using YahooFantasyWrapper.Models;
-//using System.Net;
+﻿//using System.Net;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using YahooFantasyWrapper.Models;
 
 namespace YahooFantasyWrapper.Client
 {

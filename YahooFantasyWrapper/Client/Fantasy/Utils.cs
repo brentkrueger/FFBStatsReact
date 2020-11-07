@@ -4,12 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using YahooFantasyWrapper.Infrastructure;
-using YahooFantasyWrapper.Models;
 
 namespace YahooFantasyWrapper.Client
 {
@@ -82,7 +80,7 @@ namespace YahooFantasyWrapper.Client
                 var xml = await Utils.GetResponseData(endPoint, AccessToken);
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
                 XElement xElement = xml.Descendants(YahooXml.XMLNS + lookup).FirstOrDefault();
-                if (xElement == null && IsError(xml))                
+                if (xElement == null && IsError(xml))
                     throw new InvalidOperationException(GetErrorMessage(xml));
                 if (xElement == null)
                     throw new InvalidOperationException($"Invalid XML returned. {xml}");
@@ -93,12 +91,12 @@ namespace YahooFantasyWrapper.Client
         }
 
         private static string GetErrorMessage(XDocument xml)
-        {            
-            var result = 
+        {
+            var result =
                 from e in xml.Root.Elements()
                 where e.Name.LocalName == "description"
-                select e.Value;                
-            
+                select e.Value;
+
             return result.FirstOrDefault() ?? "Unknown XML";
         }
 

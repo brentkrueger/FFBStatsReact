@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace YahooFantasyWrapper.Client
+﻿namespace YahooFantasyWrapper.Client
 {
     internal static class AuthApiEndPoints
     {

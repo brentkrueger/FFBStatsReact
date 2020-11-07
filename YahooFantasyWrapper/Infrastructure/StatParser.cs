@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace YahooFantasyWrapper.Infrastructure
+﻿namespace YahooFantasyWrapper.Infrastructure
 {
     public static class StatParser
     {

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FFBStats.Web.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using FFBStats.Web.Models;
-using Microsoft.AspNetCore.Mvc;
 using YahooFantasyWrapper.Client;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-using System.Net.Http;
-using System.Net;
 
 namespace FFBStats.Web.Controllers
 {

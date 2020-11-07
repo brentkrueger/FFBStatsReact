@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace YahooFantasyWrapper.Models
 {
     /// <summary>
     /// Class to Store Authentication Data for Yahoo
     /// </summary>
-   public class AuthModel
+    public class AuthModel
     {
         public string AccessToken { get; set; }
 
