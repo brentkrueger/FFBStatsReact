@@ -35,7 +35,7 @@ namespace YahooFantasyWrapper.Client
         PositionTypes,//  "position_types"
         RosterPositions,//  "roster_positions"
         StatCategories,// "stat_categories"
-
+        Games,// "games"
 
 
         DraftResults,// "draftresults"

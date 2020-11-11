@@ -3,6 +3,11 @@ a {
   color: #0366d6;
 }
 
+ul {
+    padding: 0;
+    margin: 0;
+}
+
 code {
   color: #E01A76;
 }
@@ -11,4 +16,28 @@ code {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+.game {
+    padding: 10px;
+    border: 1px dashed black;
+    margin: 15px;
+    align-self: center;
+    background: transparent;
+    padding: 1rem 1rem;
+    transition: all .5s ease;
+    color: #41403E;
+    letter-spacing: 1px;
+    outline: none;
+    box-shadow: 20px 38px 34px -26px hsla(0,0%,0%,.2);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+    .game:hover {
+        background-color: gainsboro;
+        font-weight: bold;
+    }
+
+.game li {
+    list-style-type: none;
 }

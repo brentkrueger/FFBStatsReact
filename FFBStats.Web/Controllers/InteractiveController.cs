@@ -1,4 +1,5 @@
-﻿using FFBStats.Web.Models;
+﻿using System;
+using FFBStats.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,11 +30,21 @@ namespace FFBStats.Web.Controllers
         }
 
         [HttpPost("[action]")]
+        public async Task<List<string>> GetAllUserGameKeys(string gameCode)
+        {
+            await SetAuthAccessToken();
+            var user =
+                await _fantasyClient.UserResourceManager.GetUser(_authClient.Auth.AccessToken);
+            return user.GameList.Games.Where(g => g.Code.Equals(gameCode)).Select(g=>g.GameKey).ToList();
+        }
+
+        [HttpPost("[action]")]
         public async Task<List<Game>> GetGames()
         {
             await SetAuthAccessToken();
-            var games = await this._fantasyClient.GameCollectionsManager.GetGames("nfl", _authClient.Auth.AccessToken);
-            return games;
+            var gameKeys = await GetAllUserGameKeys("nfl");
+            var games = await _fantasyClient.GameCollectionsManager.GetGames(gameKeys.ToArray(), _authClient.Auth.AccessToken);
+            return games.OrderByDescending(g=>g.Season).ToList();
         }
 
         [HttpPost("[action]")]

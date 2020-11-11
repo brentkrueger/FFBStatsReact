@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { Game } from './Game';
+import { Spinner } from './Spinner';
 
 export class StatsPortal extends Component {
 
@@ -21,11 +22,14 @@ export class StatsPortal extends Component {
             body: JSON.stringify({ title: 'React POST Request Example' })
         };
 
+        this.setState({ fetchInProgress: true });
+
         fetch('/api/interactive/GetGames', requestOptions)
             .then(response => response.json())
             .then(data => {
                 this.setState({
-                    games: data
+                    games: data,
+                    fetchInProgress: false
                 });
             });
     }
@@ -35,14 +39,18 @@ export class StatsPortal extends Component {
     return (
       <div>
             <h1>Stats Portal</h1>
-            
-            {games.map(game => (
-
-                <Game game={game}></Game>
-
+            {
+                this.state.fetchInProgress ?
+                    <Spinner /> :
                     
-                ))}
-         
+                        games.map(game => (
+
+                            <Game game={game}></Game>
+
+
+                        ))
+                    
+            }
          </div>
     );
   }

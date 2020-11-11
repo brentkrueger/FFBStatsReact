@@ -373,6 +373,11 @@ namespace YahooFantasyWrapper.Client
 
         private static string BuildGameFiltersList(GameCollectionFilters filters)
         {
+            if (filters is null)
+            {
+                return string.Empty;
+            }
+
             string available = "";
             if (filters.IsAvailable != null)
             {
