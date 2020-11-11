@@ -1,4 +1,7 @@
+/// <reference path="game.js" />
+
 import React, { Component } from 'react';
+import { Game } from './Game';
 
 export class StatsPortal extends Component {
 
@@ -32,13 +35,12 @@ export class StatsPortal extends Component {
     return (
       <div>
             <h1>Stats Portal</h1>
-         
-                {games.map(game => (
-                    <ul>
-                    <li>{game.gameKey}</li>
-                    <li>{game.gameId}</li>
-                        <li>{game.name}</li>
-                        </ul>
+            
+            {games.map(game => (
+
+                <Game game={game}></Game>
+
+                    
                 ))}
          
          </div>
