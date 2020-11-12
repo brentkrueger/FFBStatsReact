@@ -23,46 +23,59 @@ namespace FFBStats.Web.Controllers
             this._fantasyClient = fantasyClient;
         }
 
-        [HttpGet("[action]")]
-        public string Login()
-        {
-            return this._authClient.GetLoginLinkUri();
-        }
-
-        [HttpPost("[action]")]
-        public async Task<List<string>> GetAllUserGameKeys(string gameCode)
+        private async Task<List<string>> GetUserGameKeys(string gameCode)
         {
             await SetAuthAccessToken();
-            var user =
-                await _fantasyClient.UserResourceManager.GetUser(_authClient.Auth.AccessToken);
+            var user = await _fantasyClient.UserResourceManager.GetUser(_authClient.Auth.AccessToken);
             return user.GameList.Games.Where(g => g.Code.Equals(gameCode)).Select(g=>g.GameKey).ToList();
         }
 
-        [HttpPost("[action]")]
+        [HttpGet]
+        [Route("GetGames")]
         public async Task<List<Game>> GetGames()
         {
             await SetAuthAccessToken();
-            var gameKeys = await GetAllUserGameKeys("nfl");
+            var gameKeys = await GetUserGameKeys("nfl");
             var games = await _fantasyClient.GameCollectionsManager.GetGames(gameKeys.ToArray(), _authClient.Auth.AccessToken);
             return games.OrderByDescending(g=>g.Season).ToList();
         }
 
-        [HttpPost("[action]")]
-        public async Task<List<League>> GetLeagues()
+        [HttpGet]
+        [Route("GetLeagues/{gameKey}")]
+        public async Task<List<League>> GetLeagues(string gameKey)
         {
-            var refreshToken = await HttpContext.GetTokenAsync("refresh_token");
+            await SetAuthAccessToken();
+            var user = await _fantasyClient.UserResourceManager.GetUserGameLeagues(_authClient.Auth.AccessToken,
+                new[] {gameKey},EndpointSubResourcesCollection.BuildResourceList(EndpointSubResources.Teams, EndpointSubResources.Scoreboard));
+            var game = user.GameList.Games.FirstOrDefault();
+            var leagues = game.LeagueList.Leagues;
+            foreach (var league in leagues)
+            {
+                var loginOwnedTeam = league.TeamList.Teams.FirstOrDefault(t => t.IsOwnedByCurrentLogin);
+                if(loginOwnedTeam != null)
+                {
+                    league.Logo = loginOwnedTeam.TeamLogos.TeamLogo.Url;
+                }
+                
+                foreach (var matchup in league.Scoreboard.Matchups.Matchups)
+                {
+                    foreach (var scoreboardTeam in matchup.Teams.Teams)
+                    {
+                        if (!league.LowScore.HasValue || (scoreboardTeam.TeamPoints.Total < league.LowScore))
+                        {
+                            league.LowScore = scoreboardTeam.TeamPoints.Total;
+                            league.LowScoreTeamName = scoreboardTeam.Name;
+                        }
 
-            var updatedAccessToken = await _authClient.GetCurrentToken(refreshToken);
-
-            _authClient.Auth.AccessToken = updatedAccessToken;
-
-            var key = "test";
-
-            var user = await this._fantasyClient.UserResourceManager.GetUserGameLeagues(_authClient.Auth.AccessToken, new string[] { key }, EndpointSubResourcesCollection.BuildResourceList(EndpointSubResources.Teams));
-            var Games = user.GameList.Games
-                    .Where(a => a.GameKey == a.GameKey)
-                    .Select(a => a.LeagueList.Leagues).FirstOrDefault();
-            return Games;
+                        if (!league.HighScore.HasValue || (scoreboardTeam.TeamPoints.Total > league.HighScore))
+                        {
+                            league.HighScore = scoreboardTeam.TeamPoints.Total;
+                            league.HighScoreTeamName = scoreboardTeam.Name;
+                        }
+                    }
+                }
+            }
+            return leagues;
         }
 
         [HttpPost("[action]")]

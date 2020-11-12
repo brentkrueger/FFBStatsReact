@@ -1,55 +1,49 @@
-/// <reference path="game.js" />
-
 import React, { Component } from 'react';
-import { Game } from './Game';
+import { League } from './League';
 import { Spinner } from './Spinner';
+import { Game } from './Game';
 
-export class StatsPortal extends Component {
+export class LeaguePicker extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            games: []
+            leagues: []
         };
     }
 
-
     componentDidMount() {
 
+        var gameKey = this.props.match.params.gameKey;
+
         const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title: 'React POST Request Example' })
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
         };
 
         this.setState({ fetchInProgress: true });
 
-        fetch('/api/interactive/GetGames', requestOptions)
+        fetch('/api/interactive/GetLeagues/' + gameKey, requestOptions)
             .then(response => response.json())
             .then(data => {
                 this.setState({
-                    games: data,
+                    leagues: data,
                     fetchInProgress: false
                 });
             });
     }
 
     render() {
-        const { games } = this.state;
+        const { leagues } = this.state;
     return (
       <div>
-            <h1>Stats Portal</h1>
+            <div class="header">Select a league:</div>
             {
                 this.state.fetchInProgress ?
                     <Spinner /> :
-                    
-                        games.map(game => (
-
-                            <Game game={game}></Game>
-
-
+                    leagues.map(league => (
+                        <League league={league}></League>
                         ))
-                    
             }
          </div>
     );

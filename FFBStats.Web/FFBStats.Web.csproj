@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="AspNet.Security.OAuth.Yahoo" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.8" />
+    <PackageReference Include="WebApiRouteDebugger" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>

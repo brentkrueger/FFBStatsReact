@@ -3,6 +3,10 @@ a {
   color: #0366d6;
 }
 
+.header {
+    font-size: 2em;
+}
+
 ul {
     padding: 0;
     margin: 0;
@@ -18,7 +22,7 @@ code {
   border-color: #1861ac;
 }
 
-.game {
+.game, .league {
     padding: 10px;
     border: 1px dashed black;
     margin: 15px;
@@ -33,11 +37,15 @@ code {
     border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
 }
 
-    .game:hover {
+    .game:hover, .league:hover {
         background-color: gainsboro;
         font-weight: bold;
     }
 
-.game li {
-    list-style-type: none;
-}
+    .game li, .league li {
+        list-style-type: none;
+    }
+
+    .teamLogo {
+        width: 100px;
+    }

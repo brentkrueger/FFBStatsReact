@@ -33,7 +33,7 @@ export class NavMenuAuthenticated extends Component {
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/StatsPortal">Stats Portal</NavLink>
+                  <NavLink tag={Link} className="text-dark" to="/YearPicker">Pick Year</NavLink>
                             </NavItem>
                             <NavItem>
                                 <a class="text-dark nav-link" href="/signout">Logout</a>

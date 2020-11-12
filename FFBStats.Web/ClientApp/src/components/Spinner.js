@@ -9,7 +9,8 @@ export class Spinner extends Component {
 
     render() {
         return (
-        <div class='spinner'>
+            <div class='spinner'>
+                Loading...
                 <img src={spinnerImage}  />
             </div>
     );

@@ -72,6 +72,13 @@ namespace YahooFantasyWrapper.Models
         [XmlElement(ElementName = "draft_results")]
         public DraftResults DraftResults { get; set; }
 
+        public string Logo { get; set; }
+
+        public double? HighScore { get; set; }
+        public string HighScoreTeamName { get; set; }
+        public double? LowScore { get; set; }
+        public string LowScoreTeamName { get; set; }
+
     }
 
     [XmlRoot(ElementName = "leagues", Namespace = "http://fantasysports.yahooapis.com/fantasy/v2/base.rng")]
