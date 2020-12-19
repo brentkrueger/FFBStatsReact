@@ -8,6 +8,7 @@
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     <AssemblyName>FFBStats.Web</AssemblyName>
+    <UserSecretsId>533b10c9-bbf7-4ac1-aff5-ccd0d888be63</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
