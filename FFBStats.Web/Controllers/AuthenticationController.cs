@@ -8,13 +8,6 @@ namespace FFBStats.Web.Controllers
 {
     public class AuthenticationController : Controller
     {
-        public AuthenticationController(IYahooAuthClient authClient)
-        {
-            AuthClient = authClient;
-        }
-
-        public IYahooAuthClient AuthClient { get; }
-
         [HttpGet("~/signin")]
         public async Task<IActionResult> SignIn()
         {

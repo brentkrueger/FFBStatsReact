@@ -36,11 +36,7 @@ namespace FFBStats
             services.Configure<YahooConfiguration>((IConfiguration)this.Configuration.GetSection("YahooConfiguration"));
 
             //Add Services for YahooFantasyWrapper Package
-            services.AddSingleton<IRequestFactory, RequestFactory>();
-            services.AddTransient<IYahooAuthClient, YahooAuthClient>();
-            services.AddSingleton<IYahooFantasyClient, YahooFantasyClient>();
-
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            ConfigureIoC(services);
 
             services.AddRouting();
 
@@ -64,9 +60,10 @@ namespace FFBStats
 
         private void ConfigureIoC(IServiceCollection services)
         {
-            services.AddSingleton<IYahooFantasyClient, YahooFantasyClient>();
             services.AddSingleton<IRequestFactory, RequestFactory>();
             services.AddTransient<IYahooAuthClient, YahooAuthClient>();
+            services.AddSingleton<IYahooFantasyClient, YahooFantasyClient>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

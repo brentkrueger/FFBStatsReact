@@ -23,7 +23,7 @@ export class LeaguePicker extends Component {
 
         this.setState({ fetchInProgress: true });
 
-        fetch('/api/interactive/GetLeagues/' + gameKey, requestOptions)
+        fetch('/api/LeagueStats/GetLeagues/' + gameKey, requestOptions)
             .then(response => response.json())
             .then(data => {
                 this.setState({

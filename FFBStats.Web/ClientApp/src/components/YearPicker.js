@@ -22,7 +22,7 @@ export class YearPicker extends Component {
 
         this.setState({ fetchInProgress: true });
 
-        fetch('/api/interactive/GetGames', requestOptions)
+        fetch('/api/LeagueStats/GetGames', requestOptions)
             .then(response => response.json())
             .then(data => {
                 this.setState({
