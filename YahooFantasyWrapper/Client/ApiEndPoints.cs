@@ -248,12 +248,12 @@ namespace YahooFantasyWrapper.Client
         #endregion
 
         #region Roster
-        internal static EndPoint RosterEndPoint(string teamKey, int? week = null, DateTime? date = null)
+        internal static EndPoint RosterEndPoint(string teamKey, int? week = null)
         {
             return new EndPoint
             {
                 BaseUri = BaseApiUrl,
-                Resource = $"/team/{teamKey}/roster/{BuildWeekList(new int?[] { week })}{BuildDate(date)}"
+                Resource = $"/team/{teamKey}/roster{BuildWeekList(new int?[] { week })}"
             };
 
         }

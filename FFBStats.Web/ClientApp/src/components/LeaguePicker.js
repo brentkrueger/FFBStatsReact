@@ -37,7 +37,6 @@ export class LeaguePicker extends Component {
         const { leagues } = this.state;
     return (
       <div>
-            <div class="header">Select a league:</div>
             {
                 this.state.fetchInProgress ?
                     <Spinner /> :

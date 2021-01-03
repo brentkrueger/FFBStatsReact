@@ -23,9 +23,9 @@ namespace YahooFantasyWrapper.Client
         /// <param name="week">Optional Week to get Roster at particular time</param>
         /// <param name="date">Optional Date to get Roster at particular time</param>
         /// <returns>Player Resource</returns>
-        public async Task<Roster> GetPlayers(string teamKey, int? week, DateTime? date, string AccessToken)
+        public async Task<Roster> GetPlayers(string teamKey, int? week, string AccessToken)
         {
-            return await Utils.GetResource<Roster>(ApiEndpoints.RosterEndPoint(teamKey, week, date), AccessToken, "roster");
+            return await Utils.GetResource<Roster>(ApiEndpoints.RosterEndPoint(teamKey, week), AccessToken, "roster");
         }
     }
 }
