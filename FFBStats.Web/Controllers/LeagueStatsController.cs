@@ -44,7 +44,7 @@ namespace FFBStats.Web.Controllers
             await SetAuthAccessToken();
             var user = await _fantasyClient.UserResourceManager.GetUserGameLeagues(_authClient.Auth.AccessToken,
                 new[] {gameKey},
-                EndpointSubResourcesCollection.BuildResourceList(EndpointSubResources.Teams, EndpointSubResources.Scoreboard));
+                EndpointSubResourcesCollection.BuildResourceList(EndpointSubResources.Teams, EndpointSubResources.Scoreboard, EndpointSubResources.Standings));
             var game = user.GameList.Games.FirstOrDefault();
             if (game != null)
             {
@@ -64,11 +64,18 @@ namespace FFBStats.Web.Controllers
 
             league.Scoreboard = leagueWithAllMatchups.Scoreboard;
 
-            var loginOwnedTeam = league.TeamList.Teams.FirstOrDefault(t => t.IsOwnedByCurrentLogin);
+            var loginOwnedTeam = league.Standings.TeamList.Teams.FirstOrDefault(t => t.IsOwnedByCurrentLogin);
             if (loginOwnedTeam != null)
             {
+                league.LoggedInUserStats.TeamName = loginOwnedTeam.Name;
+                league.LoggedInUserStats.Wins = loginOwnedTeam.TeamStandings.OutcomeTotals.Wins;
+                league.LoggedInUserStats.Losses = loginOwnedTeam.TeamStandings.OutcomeTotals.Losses;
+                league.LoggedInUserStats.Ties = loginOwnedTeam.TeamStandings.OutcomeTotals.Ties;
+                league.LoggedInUserStats.WinningPercentage = loginOwnedTeam.TeamStandings.OutcomeTotals.Percentage;
+                league.LoggedInUserStats.Rank = loginOwnedTeam.TeamStandings.Rank;
                 league.LoggedInUserStats.Logo = loginOwnedTeam.TeamLogos.TeamLogo.Url;
             }
+
             foreach (var matchup in league.Scoreboard.Matchups.Matchups.Where(m => m.Status.Equals(YahooApiCommon.PostGameStatus)))
             {
                 foreach (var scoreboardTeam in matchup.Teams.Teams)
@@ -89,7 +96,6 @@ namespace FFBStats.Web.Controllers
 
                     if (scoreboardTeam.IsOwnedByCurrentLogin)
                     {
-                        league.LoggedInUserStats.TeamName = scoreboardTeam.Name;
                         if (!league.LoggedInUserStats.LowScore.HasValue ||
                             (scoreboardTeam.TeamPoints.Total < league.LoggedInUserStats.LowScore))
                         {

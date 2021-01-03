@@ -17,6 +17,7 @@ export class League extends Component {
                 </ul>
                 <h3>My Team Stats</h3>
                 <ul>
+                    <li>Record: {this.props.league.loggedInUserStats.wins}-{this.props.league.loggedInUserStats.losses}-{this.props.league.loggedInUserStats.ties} (Winning %){this.props.league.loggedInUserStats.winningPercentage}</li>
                     <li>High Score: {this.props.league.loggedInUserStats.highScore} in week {this.props.league.loggedInUserStats.highScoreWeek}</li>
                     <li>Low Score: {this.props.league.loggedInUserStats.lowScore} in week {this.props.league.loggedInUserStats.lowScoreWeek}</li>
                 </ul>
